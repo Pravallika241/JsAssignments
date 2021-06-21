@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Storage Demo</title>
+</head>
+<body>
+<label>Local Score : </label>
+<input type="text" value="0" disabled="disabled" id="localCount">
+<button onclick="increaseCount('localCount')">Increase Score Local </button> <br><br>
+
+<label>Session Score : </label>
+<input type="text" value="0" disabled="disabled" id="sessionCount">
+<button onclick="increaseCount('sessionCount')">Increase Score Session</button> <br><br>
+
+<button onclick="clearSession()">Clear Session</button>
+</body>
+<script type="text/javascript">
+
+        displayScore = () => {
+            var localScore = localStorage.getItem('localScore');
+            var sessionScore = sessionStorage.getItem('sessionScore');
+
+            if(localScore === null){
+                localScore = 0;
+                localStorage.setItem("localScore", localScore);
+            }
+            if(sessionScore === null){
+                sessionScore = 0;
+                sessionStorage.setItem("sessionScore", sessionScore);
+            }
+
+            document.getElementById('localCount').value = localScore;
+            document.getElementById('sessionCount').value = sessionScore;
+        }
+
+        window.onload = displayScore();
+
+        var increaseCount = (type) => {
+            if(type === "localCount"){
+                let ls = localStorage.getItem('localScore');
+                console.log(ls);
+                ls++;
+                console.log(ls);
+                localScore = ls;
+                localStorage.setItem("localScore", ls);
+            }
+            else if(type === "sessionCount"){
+                let ss = sessionStorage.getItem('sessionScore');
+                console.log(ss);
+                ss++;
+                console.log(ss);
+                sessionScore = ss;
+                sessionStorage.setItem("sessionScore", ss);
+            }
+            displayScore();
+        }
+
+        clearSession = () => {
+            sessionStorage.removeItem("sessionScore");
+            displayScore();
+        }
+    </script>
+</html>
